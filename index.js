@@ -4,20 +4,10 @@ const mongoose = require('mongoose');
 
 const { MONGODB } = require('./config.js');
 
+const typeDefs = require('./graphql/typeDefs');
+
 // Models
 const Post = require('./models/Post');
-
-const typeDefs = gql`
-  type Post {
-    id: ID!
-    body: String!
-    createdAt: String!
-    username: String!
-  }
-  type Query {
-    getPosts: [Post]
-  }
-`;
 
 const resolvers = {
   Query: {
