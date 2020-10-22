@@ -1,6 +1,8 @@
 const bcyrpt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
+const { UserInputError } = require('apollo-server');
+
 const { SECRET_KEY } = require('../../config');
 
 const User = require('../../models/User');
@@ -9,13 +11,21 @@ module.exports = {
   Mutation: {
     async register(
       _parent,
-      { registerInput: { confirmPassword, email, password, username } },
-      _context,
-      _info
+      { registerInput: { confirmPassword, email, password, username } }
     ) {
       // TODO: Validate user data
-      // TODO: Make sure user doesn't already exist
-      // TODO: Hash password and create auth token
+
+      // Make sure user doesn't already exist
+      const user = await User.findOne({ username });
+      if (user) {
+        throw new UserInputError('Username is taken', {
+          errors: {
+            username: 'This username is already taken',
+          },
+        });
+      }
+
+      // Hash password and create auth token
       password = await bcyrpt.hash(password, 12);
       const newUser = new User({
         createdAt: new Date().toISOString(),
