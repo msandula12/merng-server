@@ -57,7 +57,7 @@ module.exports = {
       };
     },
     async register(
-      _parent,
+      _,
       { registerInput: { confirmPassword, email, password, username } }
     ) {
       // Validate user data
