@@ -1,10 +1,28 @@
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { Container } from 'semantic-ui-react';
+
+// Styles
+import 'semantic-ui-css/semantic.min.css';
 import './App.css';
+
+// Pages
+import Home from './components/pages/Home';
+import Login from './components/pages/Login';
+import Register from './components/pages/Register';
+
+// Components
+import MenuBar from './components/MenuBar';
 
 function App() {
   return (
-    <div>
-      <h1>Hi, World!</h1>
-    </div>
+    <Router>
+      <Container>
+        <MenuBar />
+        <Route exact path="/" component={Home} />
+        <Route exact path="/login" component={Login} />
+        <Route exact path="/register" component={Register} />
+      </Container>
+    </Router>
   );
 }
 
