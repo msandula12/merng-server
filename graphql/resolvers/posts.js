@@ -5,7 +5,7 @@ const checkAuth = require('../../util/checkAuth');
 
 module.exports = {
   Query: {
-    async getPost(_parent, { postId }) {
+    async getPost(_, { postId }) {
       try {
         const post = await Post.findById(postId);
         if (post) {
