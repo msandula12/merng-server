@@ -13,10 +13,12 @@ module.exports = gql`
     username: String!
   }
   type Post {
-    id: ID!
     body: String!
+    commentCount: Int!
     comments: [Comment]!
     createdAt: String!
+    id: ID!
+    likeCount: Int!
     likes: [Like]!
     username: String!
   }
