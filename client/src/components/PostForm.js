@@ -4,6 +4,7 @@ import gql from 'graphql-tag';
 import { Button, Form } from 'semantic-ui-react';
 
 import { useForm } from '../util/customHooks';
+import { FETCH_POSTS } from '../util/graphql';
 
 function PostForm() {
   const createPostCallback = () => {
@@ -15,8 +16,16 @@ function PostForm() {
   });
 
   const [createPost, { error }] = useMutation(CREATE_POST, {
-    update(_, result) {
-      console.log('result: ', result);
+    update(proxy, result) {
+      const data = proxy.readQuery({
+        query: FETCH_POSTS,
+      });
+      proxy.writeQuery({
+        query: FETCH_POSTS,
+        data: {
+          getPosts: [result.data.createPost, ...data.getPosts],
+        },
+      });
       values.body = '';
     },
     variables: values,
