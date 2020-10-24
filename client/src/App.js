@@ -11,6 +11,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 
 // Components
+import AuthRoute from './components/AuthRoute';
 import MenuBar from './components/MenuBar';
 
 // Context
@@ -23,8 +24,8 @@ function App() {
         <Container>
           <MenuBar />
           <Route exact path="/" component={Home} />
-          <Route exact path="/login" component={Login} />
-          <Route exact path="/register" component={Register} />
+          <AuthRoute exact path="/login" component={Login} />
+          <AuthRoute exact path="/register" component={Register} />
         </Container>
       </Router>
     </AuthProvider>
