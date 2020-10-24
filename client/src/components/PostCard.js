@@ -18,6 +18,7 @@ function PostCard({
     <Card fluid>
       <Card.Content>
         <Image
+          circular
           floated="right"
           size="mini"
           src="https://react.semantic-ui.com/images/avatar/large/molly.png"

@@ -22,7 +22,7 @@ function MenuBar() {
 
   return user ? (
     <Menu pointing secondary size="massive" color="teal">
-      <Menu.Item name={user.username} active as={Link} to="/" />
+      <Menu.Item as={Link} to="/" name={user.username} active />
       <Menu.Menu position="right">
         <Menu.Item name="logout" onClick={logout} />
       </Menu.Menu>
@@ -30,26 +30,27 @@ function MenuBar() {
   ) : (
     <Menu pointing secondary size="massive" color="teal">
       <Menu.Item
+        as={Link}
+        to="/"
+        content="Hi, World"
         name="home"
         active={activeItem === 'home'}
         onClick={handleMenuChange}
-        as={Link}
-        to="/"
       />
       <Menu.Menu position="right">
         <Menu.Item
+          as={Link}
+          to="/login"
           name="login"
           active={activeItem === 'login'}
           onClick={handleMenuChange}
-          as={Link}
-          to="/login"
         />
         <Menu.Item
+          as={Link}
+          to="/register"
           name="register"
           active={activeItem === 'register'}
           onClick={handleMenuChange}
-          as={Link}
-          to="/register"
         />
       </Menu.Menu>
     </Menu>
