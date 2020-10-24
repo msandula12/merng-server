@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import moment from 'moment';
 import { Button, Card, Icon, Image, Label } from 'semantic-ui-react';
 
+import DeleteButton from './DeleteButton';
 import LikeButton from './LikeButton';
 
 import { AuthContext } from '../context/auth';
@@ -20,10 +21,6 @@ function PostCard({
   },
 }) {
   const { user } = useContext(AuthContext);
-
-  const deletePost = () => {
-    console.log('Delete post');
-  };
 
   return (
     <Card fluid>
@@ -49,11 +46,7 @@ function PostCard({
             {commentCount}
           </Label>
         </Button>
-        {user && user.username === username && (
-          <Button as="div" color="red" floated="right" onClick={deletePost}>
-            <Icon name="trash" style={{ margin: 0 }} />
-          </Button>
-        )}
+        {user && user.username === username && <DeleteButton postId={id} />}
       </Card.Content>
     </Card>
   );

@@ -3,12 +3,13 @@ import { useQuery } from '@apollo/client';
 import moment from 'moment';
 import { Button, Card, Grid, Icon, Image, Label } from 'semantic-ui-react';
 
+import DeleteButton from '../components/DeleteButton';
 import LikeButton from '../components/LikeButton';
 
 import { AuthContext } from '../context/auth';
 import { FETCH_POST } from '../util/graphql';
 
-function SinglePost({ match }) {
+function SinglePost({ history, match }) {
   const { user } = useContext(AuthContext);
   const postId = match.params.postId;
 
@@ -24,6 +25,10 @@ function SinglePost({ match }) {
 
   const commentOnPost = () => {
     console.log('Comment on post');
+  };
+
+  const onDeletePost = () => {
+    history.push('/');
   };
 
   const {
@@ -65,6 +70,9 @@ function SinglePost({ match }) {
                   {commentCount}
                 </Label>
               </Button>
+              {user && user.username === username && (
+                <DeleteButton postId={id} callback={onDeletePost} />
+              )}
             </Card.Content>
           </Card>
         </Grid.Column>

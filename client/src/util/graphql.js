@@ -24,6 +24,12 @@ export const CREATE_POST = gql`
   }
 `;
 
+export const DELETE_POST = gql`
+  mutation deletePost($postId: ID!) {
+    deletePost(postId: $postId)
+  }
+`;
+
 export const FETCH_POST = gql`
   query($postId: ID!) {
     getPost(postId: $postId) {

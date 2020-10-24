@@ -16,6 +16,7 @@ function PostForm() {
 
   const [createPost, { error }] = useMutation(CREATE_POST, {
     update(proxy, result) {
+      // Update cache so new post shows up
       const data = proxy.readQuery({
         query: FETCH_POSTS,
       });
