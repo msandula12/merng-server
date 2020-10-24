@@ -1,8 +1,8 @@
 module.exports.validateRegisterInput = (
-  confirmPassword,
+  username,
   email,
   password,
-  username
+  confirmPassword
 ) => {
   const errors = {};
 
