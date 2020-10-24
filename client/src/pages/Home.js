@@ -3,7 +3,7 @@ import { useQuery } from '@apollo/client';
 import gql from 'graphql-tag';
 import { Grid } from 'semantic-ui-react';
 
-import PostCard from '../PostCard';
+import PostCard from '../components/PostCard';
 
 function Home() {
   const { loading, data: { getPosts: posts } = {} } = useQuery(FETCH_POSTS);
