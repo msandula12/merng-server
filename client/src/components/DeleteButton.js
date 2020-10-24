@@ -1,32 +1,34 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { Button, Confirm, Icon } from 'semantic-ui-react';
 
-import { DELETE_POST, FETCH_POSTS } from '../util/graphql';
+import { DELETE_COMMENT, DELETE_POST, FETCH_POSTS } from '../util/graphql';
 
-function DeleteButton({ callback, postId }) {
+function DeleteButton({ callback, commentId, postId }) {
   const [confirmOpen, setConfirmOpen] = useState(false);
 
-  const [deletePost] = useMutation(DELETE_POST, {
+  const [deleteItem] = useMutation(commentId ? DELETE_COMMENT : DELETE_POST, {
     update(proxy) {
       setConfirmOpen(false);
       // Update cache so deleted post is removed
-      const data = proxy.readQuery({
-        query: FETCH_POSTS,
-      });
-      proxy.writeQuery({
-        query: FETCH_POSTS,
-        data: {
-          getPosts: data.getPosts.filter((post) => post.id !== postId),
-        },
-      });
+      if (!commentId) {
+        const data = proxy.readQuery({
+          query: FETCH_POSTS,
+        });
+        proxy.writeQuery({
+          query: FETCH_POSTS,
+          data: {
+            getPosts: data.getPosts.filter((post) => post.id !== postId),
+          },
+        });
+      }
       // Call callback, if present
       if (callback) {
         callback();
       }
     },
     onError() {},
-    variables: { postId },
+    variables: { commentId, postId },
   });
 
   return (
@@ -43,7 +45,7 @@ function DeleteButton({ callback, postId }) {
         content="Are you sure you want to delete this post?"
         open={confirmOpen}
         onCancel={() => setConfirmOpen(false)}
-        onClick={deletePost}
+        onClick={deleteItem}
         size="mini"
       />
     </>
