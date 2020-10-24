@@ -46,6 +46,19 @@ export const FETCH_POSTS = gql`
   }
 `;
 
+export const LIKE_POST = gql`
+  mutation likePost($postId: ID!) {
+    likePost(postId: $postId) {
+      id
+      likeCount
+      likes {
+        id
+        username
+      }
+    }
+  }
+`;
+
 export const LOGIN_USER = gql`
   mutation login($username: String!, $password: String!) {
     login(username: $username, password: $password) {
