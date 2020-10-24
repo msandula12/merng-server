@@ -27,24 +27,36 @@ function PostForm() {
       });
       values.body = '';
     },
+    // Silently swallow errors
+    onError() {},
     variables: values,
   });
 
   return (
-    <Form onSubmit={onSubmit}>
-      <h2>Create a post:</h2>
-      <Form.Field>
-        <Form.Input
-          placeholder="Hi, World!"
-          name="body"
-          onChange={onChange}
-          value={values.body}
-        />
-        <Button type="submit" color="teal">
-          Submit
-        </Button>
-      </Form.Field>
-    </Form>
+    <>
+      <Form onSubmit={onSubmit}>
+        <h2>Create a post:</h2>
+        <Form.Field>
+          <Form.Input
+            error={Boolean(error)}
+            placeholder="Hi, World!"
+            name="body"
+            onChange={onChange}
+            value={values.body}
+          />
+          <Button type="submit" color="teal">
+            Submit
+          </Button>
+        </Form.Field>
+      </Form>
+      {error && (
+        <div className="ui error message" style={{ marginBottom: '2rem' }}>
+          <ul className="list">
+            <li>{error.graphQLErrors[0]?.message}</li>
+          </ul>
+        </div>
+      )}
+    </>
   );
 }
 
