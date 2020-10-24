@@ -12,6 +12,7 @@ import {
 } from 'semantic-ui-react';
 
 import DeleteButton from '../components/DeleteButton';
+import InfoPopup from '../components/InfoPopup';
 import LikeButton from '../components/LikeButton';
 
 import { AuthContext } from '../context/auth';
@@ -46,7 +47,9 @@ function SinglePost({ history, match }) {
   }
 
   const commentOnPost = () => {
-    console.log('Comment on post');
+    if (commentInputRef.current) {
+      commentInputRef.current.focus();
+    }
   };
 
   const onDeletePost = () => {
@@ -84,14 +87,16 @@ function SinglePost({ history, match }) {
             <hr />
             <Card.Content extra>
               <LikeButton post={{ id, likeCount, likes }} user={user} />
-              <Button labelPosition="right" onClick={commentOnPost} as="div">
-                <Button color="blue" basic>
-                  <Icon name="comments" />
+              <InfoPopup content="Comment on post">
+                <Button labelPosition="right" as="div" onClick={commentOnPost}>
+                  <Button color="blue" basic>
+                    <Icon name="comments" />
+                  </Button>
+                  <Label basic color="blue" pointing="left">
+                    {commentCount}
+                  </Label>
                 </Button>
-                <Label basic color="blue" pointing="left">
-                  {commentCount}
-                </Label>
-              </Button>
+              </InfoPopup>
               {user && user.username === username && (
                 <DeleteButton postId={id} callback={onDeletePost} />
               )}
