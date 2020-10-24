@@ -21,10 +21,6 @@ function PostCard({
 }) {
   const { user } = useContext(AuthContext);
 
-  const commentOnPost = () => {
-    console.log('Comment on post');
-  };
-
   const deletePost = () => {
     console.log('Delete post');
   };
@@ -45,12 +41,7 @@ function PostCard({
       </Card.Content>
       <Card.Content extra>
         <LikeButton post={{ id, likeCount, likes }} user={user} />
-        <Button
-          labelPosition="right"
-          onClick={commentOnPost}
-          as={Link}
-          to={`/posts/${id}`}
-        >
+        <Button labelPosition="right" as={Link} to={`/posts/${id}`}>
           <Button color="blue" basic>
             <Icon name="comments" />
           </Button>
