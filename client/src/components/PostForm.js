@@ -36,7 +36,7 @@ function PostForm() {
   return (
     <>
       <Form onSubmit={onSubmit}>
-        <h2>Create a post:</h2>
+        <h2>Create a post</h2>
         <Form.Field>
           <Form.Input
             error={Boolean(error)}
@@ -45,7 +45,12 @@ function PostForm() {
             onChange={onChange}
             value={values.body}
           />
-          <Button type="submit" color="teal">
+          <Button
+            color="teal"
+            disabled={values.body.trim() === ''}
+            fluid
+            type="submit"
+          >
             Submit
           </Button>
         </Form.Field>

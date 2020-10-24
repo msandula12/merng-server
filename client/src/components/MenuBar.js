@@ -32,7 +32,7 @@ function MenuBar() {
       <Menu.Item
         as={Link}
         to="/"
-        content="Hi, World"
+        content="Hi, World!"
         name="home"
         active={activeItem === 'home'}
         onClick={handleMenuChange}
