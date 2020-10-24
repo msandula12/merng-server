@@ -10,16 +10,7 @@ import LikeButton from './LikeButton';
 import { AuthContext } from '../context/auth';
 
 function PostCard({
-  post: {
-    body,
-    commentCount,
-    comments,
-    createdAt,
-    id,
-    likeCount,
-    likes,
-    username,
-  },
+  post: { body, commentCount, createdAt, id, likeCount, likes, username },
 }) {
   const { user } = useContext(AuthContext);
 
