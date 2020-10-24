@@ -1,22 +1,44 @@
-import React, { useContext } from 'react';
-import { useQuery } from '@apollo/client';
+import React, { useContext, useRef, useState } from 'react';
+import { useMutation, useQuery } from '@apollo/client';
 import moment from 'moment';
-import { Button, Card, Grid, Icon, Image, Label } from 'semantic-ui-react';
+import {
+  Button,
+  Card,
+  Form,
+  Grid,
+  Icon,
+  Image,
+  Label,
+} from 'semantic-ui-react';
 
 import DeleteButton from '../components/DeleteButton';
 import LikeButton from '../components/LikeButton';
 
 import { AuthContext } from '../context/auth';
-import { FETCH_POST } from '../util/graphql';
+import { CREATE_COMMENT, FETCH_POST } from '../util/graphql';
 
 function SinglePost({ history, match }) {
+  const [comment, setComment] = useState('');
   const { user } = useContext(AuthContext);
+  const commentInputRef = useRef(null);
   const postId = match.params.postId;
 
   const { data: { getPost: post } = {} } = useQuery(FETCH_POST, {
     update() {},
     onError() {},
     variables: { postId },
+  });
+
+  const [submitComment] = useMutation(CREATE_COMMENT, {
+    update() {
+      // Reset comment input and exit focus
+      setComment('');
+      if (commentInputRef.current) {
+        commentInputRef.current.blur();
+      }
+    },
+    onError() {},
+    variables: { body: comment, postId },
   });
 
   if (!post) {
@@ -75,10 +97,37 @@ function SinglePost({ history, match }) {
               )}
             </Card.Content>
           </Card>
+          {user && (
+            <Card fluid>
+              <Card.Content>
+                <p>Post a comment</p>
+                <Form>
+                  <div className="ui action input fluid">
+                    <input
+                      name="comment"
+                      onChange={(event) => setComment(event.target.value)}
+                      placeholder="Comment..."
+                      ref={commentInputRef}
+                      type="text"
+                      value={comment}
+                    />
+                    <button
+                      type="submit"
+                      className="ui button teal"
+                      disabled={comment.trim() === ''}
+                      onClick={submitComment}
+                    >
+                      Submit
+                    </button>
+                  </div>
+                </Form>
+              </Card.Content>
+            </Card>
+          )}
           {comments.map((comment) => (
             <Card key={comment.id} fluid>
               <Card.Content>
-                {user && user.name === comment.username && (
+                {user && user.username === comment.username && (
                   <DeleteButton commentId={comment.id} postId={id} />
                 )}
                 <Card.Header>{comment.username}</Card.Header>

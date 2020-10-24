@@ -42,7 +42,9 @@ function DeleteButton({ callback, commentId, postId }) {
         <Icon name="trash" style={{ margin: 0 }} />
       </Button>
       <Confirm
-        content="Are you sure you want to delete this post?"
+        content={`Are you sure you want to delete this ${
+          commentId ? 'comment' : 'post'
+        }?`}
         open={confirmOpen}
         onCancel={() => setConfirmOpen(false)}
         onClick={deleteItem}

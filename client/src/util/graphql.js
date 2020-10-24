@@ -1,5 +1,20 @@
 import gql from 'graphql-tag';
 
+export const CREATE_COMMENT = gql`
+  mutation createComment($postId: ID!, $body: String!) {
+    createComment(postId: $postId, body: $body) {
+      id
+      commentCount
+      comments {
+        id
+        body
+        createdAt
+        username
+      }
+    }
+  }
+`;
+
 export const CREATE_POST = gql`
   mutation createPost($body: String!) {
     createPost(body: $body) {
